@@ -12,14 +12,19 @@
                     </div>
                     <div>
                         <div class="container">
+                            @if(session()->has('message'))
+                                <div class="alert alert-info">
+                                    {{session('message')}}
+                                </div>
+                            @endif
                             <h6 class="card-title">ایجاد کاربر</h6>
-                            <form method="POST">
+                            <form wire:submit="saveUser">
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">نام و نام خانوادگی</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" name="name">
+                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="name">
                                             </div>
                                         </div>
                                     </div>
@@ -27,7 +32,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">ایمیل</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" name="email">
+                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="email">
                                             </div>
                                         </div>
                                     </div>
@@ -35,7 +40,7 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">موبایل</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" name="mobile">
+                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="mobile">
                                             </div>
                                         </div>
                                     </div>
@@ -43,14 +48,14 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">پسورد</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" name="password">
+                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="password">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label" for="file"> آپلود عکس </label>
-                                            <input class="col-sm-9" type="file" class="form-control-file" id="file">
+                                            <input class="col-sm-9" type="file" class="form-control-file" id="file" wire:model="image">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -115,6 +120,7 @@
                     </table>
                     <div style="margin: 40px !important;"
                          class="pagination pagination-rounded pagination-sm d-flex justify-content-center">
+                        {{$user->links()}}
                     </div>
                 </div>
             </div>
