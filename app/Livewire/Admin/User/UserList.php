@@ -25,7 +25,7 @@ class UserList extends Component
             'image'=>'',
 
         ]);
-
+        $this->reset('name','email','mobile','password','image');
         session()->flash('message', 'کاربر جدید ایجاد شد');
     }
 
