@@ -14,12 +14,13 @@ class UserList extends Component
     public $name;
     #[Rule('required|unique:users,email')]
     public $email;
-    #[Rule('required')]
+    #[Rule('required|unique:users,mobile')]
     public $mobile;
     #[Rule('required')]
     public $password;
     #[Rule('required')]
     public $image;
+    public $search;
 
     public function saveUser()
     {
@@ -41,7 +42,11 @@ class UserList extends Component
     protected $paginationTheme = 'bootstrap';
     public function render()
     {
-        $user = User::query()->paginate(10);
+        $user = User::query()
+            ->where('name', 'like', '%'.$this->search.'%')
+            ->orWhere('email', 'like', '%'.$this->search.'%')
+            ->orWhere('mobile', 'like', '%'.$this->search.'%')
+            ->paginate(10);
         return view('livewire.admin.user.user-list', compact('user'))->layout('admin.master');
     }
 }
