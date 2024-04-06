@@ -1,5 +1,6 @@
 <!-- begin::main content -->
 <main class="main-content">
+
     <div class="card">
         <div>
             <div class="card-body">
@@ -73,6 +74,9 @@
                                                     <img src="{{$image->temporaryUrl()}}" class="rounded-circle" alt="image">
                                                 </figure>
                                             @endif
+                                            <div wire:loading wire:target="image" class="spinner-border text-primary" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
                                             @error('image')
                                             <span class="text-danger">{{$message}}</span>
                                             @enderror
@@ -80,7 +84,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group row">
-                                            <button type="submit" class="btn btn-success btn-uppercase">
+                                            <button type="submit"  class="btn btn-success btn-uppercase">
                                                 <i class="ti-check-box m-r-5"></i> ذخیره
                                             </button>
 

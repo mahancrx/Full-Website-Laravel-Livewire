@@ -2,7 +2,6 @@
 <!-- begin::main content -->
 <main class="main-content">
     <div class="row">
-        <h1>admin 2</h1>
         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-12">
             <div class="card">
                 <div class="card-body">
