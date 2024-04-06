@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function (){
 
 // ------------------------{Admin Routes}----------------------
 Route::get('/admin', \App\Livewire\Admin\Panel\Index::class)->name('panel');
+// ----------{Users Routes}--------------
 Route::get('/admin/users', \App\Livewire\Admin\User\UserList::class)->name('users.index');
 
 

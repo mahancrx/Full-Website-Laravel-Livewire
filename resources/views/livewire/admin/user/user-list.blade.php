@@ -66,8 +66,13 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group row">
-                                            <label class="col-sm-3col-form-label" for="file"> آپلود عکس </label>
-                                            <input class="col-sm-9" type="file" class="form-control-file" id="file" wire:model="image">
+                                            <label class="col-sm-3 col-form-label" for="file"> آپلود عکس </label>
+                                            <input class="col-sm-7" type="file" class="form-control-file" id="file" wire:model="image">
+                                        @if($image)
+                                                <figure class="avatar avatar col-2">
+                                                    <img src="{{$image->temporaryUrl()}}" class="rounded-circle" alt="image">
+                                                </figure>
+                                            @endif
                                             @error('image')
                                             <span class="text-danger">{{$message}}</span>
                                             @enderror
@@ -82,10 +87,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
                             </form>
                         </div>
                     </div>
@@ -103,18 +104,18 @@
                             <th class="text-center align-middle text-primary">تاریخ ایجاد</th>
                         </tr>
                         </thead>
-                        @foreach($user as $index=>$users)
+                        @foreach($users as $index=>$user)
                             <tbody>
                             <tr>
-                                <td class="text-center align-middle">{{$user->firstItem()+$index}}</td>
+                                <td class="text-center align-middle">{{$users->firstItem()+$index}}</td>
                                 <td class="text-center align-middle">
                                     <figure class="avatar avatar">
-                                        <img src="" class="rounded-circle" alt="image">
+                                        <img src="{{url('img/photos/'.$user->image)}}" class="rounded-circle" alt="image">
                                     </figure>
                                 </td>
-                                <td class="text-center align-middle">{{$users->name}}</td>
-                                <td class="text-center align-middle">{{$users->email}}</td>
-                                <td class="text-center align-middle">{{$users->mobile}}</td>
+                                <td class="text-center align-middle">{{$user->name}}</td>
+                                <td class="text-center align-middle">{{$user->email}}</td>
+                                <td class="text-center align-middle">{{$user->mobile}}</td>
                                 <td class="text-center align-middle">
                                     <a class="btn btn-outline-info" href="#">
                                         نقش های کاربر
@@ -128,14 +129,14 @@
                                         ویرایش
                                     </a>
                                 </td>
-                                <td class="text-center align-middle">{{$users->created_at}}</td>
+                                <td class="text-center align-middle">{{$user->created_at}}</td>
                             </tr>
                             </tbody>
                         @endforeach
                     </table>
                     <div style="margin: 40px !important;"
                          class="pagination pagination-rounded pagination-sm d-flex justify-content-center">
-                        {{$user->links()}}
+                        {{$users->links()}}
                     </div>
                 </div>
             </div>
