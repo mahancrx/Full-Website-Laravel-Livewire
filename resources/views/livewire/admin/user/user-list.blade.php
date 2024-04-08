@@ -8,7 +8,7 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">عنوان جستجو</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control text-left" dir="rtl" wire:model.live ="search">
+                            <input type="text" class="form-control text-left" dir="rtl" wire:model.live="search">
                         </div>
                     </div>
                     <div>
@@ -25,7 +25,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">نام و نام خانوادگی</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="name">
+                                                <input type="text" class="form-control text-left" dir="rtl"
+                                                       wire:model="name">
                                                 @error('name')
                                                 <span class="text-danger">{{$message}}</span>
                                                 @enderror
@@ -36,7 +37,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">ایمیل</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="email">
+                                                <input type="text" class="form-control text-left" dir="rtl"
+                                                       wire:model="email">
                                                 @error('email')
                                                 <span class="text-danger">{{$message}}</span>
                                                 @enderror
@@ -47,7 +49,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">موبایل</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="mobile">
+                                                <input type="text" class="form-control text-left" dir="rtl"
+                                                       wire:model="mobile">
                                                 @error('mobile')
                                                 <span class="text-danger">{{$message}}</span>
                                                 @enderror
@@ -58,7 +61,8 @@
                                         <div class="form-group row">
                                             <label class="col-sm-3col-form-label">پسورد</label>
                                             <div class="col-sm-9">
-                                                <input type="text" class="form-control text-left" dir="rtl" wire:model="password">
+                                                <input type="text" class="form-control text-left" dir="rtl"
+                                                       wire:model="password">
                                                 @error('password')
                                                 <span class="text-danger">{{$message}}</span>
                                                 @enderror
@@ -68,13 +72,16 @@
                                     <div class="col-md-4">
                                         <div class="form-group row">
                                             <label class="col-sm-3 col-form-label" for="file"> آپلود عکس </label>
-                                            <input class="col-sm-7" type="file" class="form-control-file" id="file" wire:model="image">
-                                        @if($image)
+                                            <input class="col-sm-7" type="file" class="form-control-file" id="file"
+                                                   wire:model="image">
+                                            @if($image)
                                                 <figure class="avatar avatar col-2">
-                                                    <img src="{{$image->temporaryUrl()}}" class="rounded-circle" alt="image">
+                                                    <img src="{{$image->temporaryUrl()}}" class="rounded-circle"
+                                                         alt="image">
                                                 </figure>
                                             @endif
-                                            <div wire:loading wire:target="image" class="spinner-border text-primary" role="status">
+                                            <div wire:loading wire:target="image" class="spinner-border text-primary"
+                                                 role="status">
                                                 <span class="sr-only">Loading...</span>
                                             </div>
                                             @error('image')
@@ -84,10 +91,11 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group row">
-                                            <button type="submit"  class="btn btn-success btn-uppercase">
-                                                <i class="ti-check-box m-r-5"></i> ذخیره
-                                            </button>
-
+                                            @if($editUserIndex==null)
+                                                <button type="submit" class="btn btn-success btn-uppercase">
+                                                    <i class="ti-check-box m-r-5"></i> کاربر جدید
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +122,8 @@
                                 <td class="text-center align-middle">{{$users->firstItem()+$index}}</td>
                                 <td class="text-center align-middle">
                                     <figure class="avatar avatar">
-                                        <img src="{{url('img/photos/'.$user->image)}}" class="rounded-circle" alt="image">
+                                        <img src="{{url('img/photos/'.$user->image)}}" class="rounded-circle"
+                                             alt="image">
                                     </figure>
                                 </td>
                                 <td class="text-center align-middle">{{$user->name}}</td>
@@ -129,9 +138,15 @@
                                     <span class="cursor-pointer badge badge-success">فعال</span>
                                 </td>
                                 <td class="text-center align-middle">
-                                    <a class="btn btn-outline-info" href="#">
-                                        ویرایش
-                                    </a>
+                                    @if($editUserIndex==$user->id)
+                                        <a class="btn btn-outline-info" href="#" wire:click="updateRow({{$user->id}})">
+                                            ذخیره
+                                        </a>
+                                    @else
+                                        <a class="btn btn-outline-info" href="#" wire:click="editRow({{$user->id}})">
+                                            ویرایش
+                                        </a>
+                                    @endif
                                 </td>
                                 <td class="text-center align-middle">{{$user->created_at}}</td>
                             </tr>

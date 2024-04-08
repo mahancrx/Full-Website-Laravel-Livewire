@@ -25,6 +25,42 @@ class UserList extends Component
     #[Rule('required')]
     public $image;
     public $search;
+    public $editUserIndex=null;
+
+    public function updateRow($user_id)
+    {
+        if ($this->image != null){
+            $name = time().'.'.$this->image->getClientOriginalExtension();
+            $this->image->storeAs('photos',$name,'images');
+        }else{
+            $name=null;
+        }
+
+        $user = User::query()->find($user_id);
+        $user->update([
+            'name'=>$this->name,
+            'email'=>$this->email,
+            'mobile'=>$this->mobile,
+            'password'=>$this->password ? Hash::make($this->password) : $user->password,
+            'image'=>$name,
+        ]);
+        session()->flash('message', 'کاربر ویرایش شد');
+        $this->editUserIndex=null;
+
+    }
+
+
+    public function editRow($user_id)
+    {
+        $this->editUserIndex=$user_id;
+
+        $user = User::query()->find($user_id);
+        $this->name = $user->name;
+        $this->email = $user->email;
+        $this->mobile = $user->mobile;
+
+    }
+
 
     public function saveUser()
     {
