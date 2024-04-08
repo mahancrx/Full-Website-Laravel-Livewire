@@ -18,7 +18,7 @@ class UserList extends Component
     public $name;
     #[Rule('required|unique:users,email')]
     public $email;
-    #[Rule('required|unique:users,mobile')]
+    #[Rule('required|unique:users,mobile|max:11|min:11')]
     public $mobile;
     #[Rule('required')]
     public $password;
@@ -29,14 +29,19 @@ class UserList extends Component
 
     public function updateRow($user_id)
     {
+        $this->validate([
+            'name'=>'required',
+            'mobile'=>'required|max:11|min:11|unique:users,mobile,'.$user_id,
+            'email'=>'required|unique:users,email,'.$user_id,
+        ]);
+        $user = User::query()->find($user_id);
         if ($this->image != null){
             $name = time().'.'.$this->image->getClientOriginalExtension();
             $this->image->storeAs('photos',$name,'images');
         }else{
-            $name=null;
+            $name=$user->image;
         }
 
-        $user = User::query()->find($user_id);
         $user->update([
             'name'=>$this->name,
             'email'=>$this->email,
