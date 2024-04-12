@@ -20,44 +20,27 @@ class UserList extends Component
     //-------------{Update User}-----------
     public function updateRow($user_id)
     {
-        $this->validate([
-            'name'=>'required',
-            'mobile'=>'required|max:11|min:11|unique:users,mobile,'.$user_id,
-            'email'=>'required|unique:users,email,'.$user_id,
-        ]);
-        $user = User::query()->find($user_id);
-        if ($this->image != null){
-            $name = time().'.'.$this->image->getClientOriginalExtension();
-            $this->image->storeAs('photos',$name,'images');
-        }else{
-            $name=$user->image;
-        }
-        $user->update([
-            'name'=>$this->name,
-            'email'=>$this->email,
-            'mobile'=>$this->mobile,
-            'password'=>$this->password ? Hash::make($this->password) : $user->password,
-            'image'=>$name,
-        ]);
-        session()->flash('message', 'کاربر ویرایش شد');
-        $this->editUserIndex=null;
+        $this->dispatch('updateRow', $user_id);
     }
     //-------------{Edit User Row Table}-----------
     public function editRow($user_id)
     {
         $this->editUserIndex=$user_id;
-        $user = User::query()->find($user_id);
-        $this->name = $user->name;
-        $this->email = $user->email;
-        $this->mobile = $user->mobile;
+        $this->dispatch('editRow', $user_id);
     }
 
     //-------------{Refresh Component After Create User}-----------
     #[on('user-created')]
+//    public function userCreated()
+//    {
+//
+//    }
+    #[on('user-updated')]
     public function userUpdated()
     {
-
+        $this->editUserIndex=null;
     }
+
     public function render()
     {
         $users = User::query()
