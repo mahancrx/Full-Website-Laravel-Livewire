@@ -4,11 +4,13 @@ namespace App\Livewire\Admin\User;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Livewire\Attributes\Js;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\WithPagination;
+use function Laravel\Prompts\alert;
 
 class UserList extends Component
 {
@@ -17,6 +19,7 @@ class UserList extends Component
     public $image;
     public $search;
     public $editUserIndex=null;
+    public $sortId=true;
     //-------------{Update User}-----------
     public function updateRow($user_id)
     {
@@ -40,10 +43,22 @@ class UserList extends Component
     {
         $this->editUserIndex=null;
     }
+    #[Js]
+    public function resetSearch()
+    {
+        return <<<'JS'
+            $wire.search='';
+        JS;
+
+    }
 
     public function render()
     {
+        $this->js(
+            "alert('page reload')"
+        );
         $users = User::query()
+            ->orderBy('id', $this->sortId ? "ASC" : "DESC")
             ->where('name', 'like', '%'.$this->search.'%')
             ->orWhere('email', 'like', '%'.$this->search.'%')
             ->orWhere('mobile', 'like', '%'.$this->search.'%')
