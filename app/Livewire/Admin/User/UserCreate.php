@@ -85,6 +85,7 @@ class UserCreate extends Component
         ]);
         $this->reset('name','email','mobile','image','password',);
         session()->flash('message', 'کاربر ویرایش شد');
+        $this->editUserIndex=null;
         $this->dispatch('user-updated');
     }
     //-------------{livewire View}-----------
